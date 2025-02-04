@@ -5,13 +5,246 @@ $imagepath = isset($_GET['imagepath']) ? $_GET['imagepath'] : 'imagepath';
 ?>
 <!DOCTYPE html>
 <script>
+lucide.createIcons();
+</script>
+<style>
+
+
+/* Base Button Styles */
+.squishy {
+  position: relative;
+  font-size: 1.875rem;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 250ms;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.squishy i {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+/* Classic Squishy */
+.squishy-classic {
+  background-color: #f0f0f0;
+  color: #242424;
+  border-radius: 0.5rem;
+  box-shadow: 
+    inset 0 1px 0 0 #f4f4f4,
+    0 1px 0 0 #efefef,
+    0 2px 0 0 #ececec,
+    0 4px 0 0 #e0e0e0,
+    0 5px 0 0 #dedede,
+    0 6px 0 0 #dcdcdc,
+    0 7px 0 0 #cacaca,
+    0 7px 8px 0 #cecece;
+}
+
+.squishy-classic:hover {
+  transform: translateY(4px);
+  box-shadow: 
+    inset 0 1px 0 0 #f4f4f4,
+    0 1px 0 0 #efefef,
+    0 1px 0 0 #ececec,
+    0 2px 0 0 #e0e0e0,
+    0 2px 0 0 #dedede,
+    0 3px 0 0 #dcdcdc,
+    0 4px 0 0 #cacaca,
+    0 4px 6px 0 #cecece;
+}
+
+/* Neon Squishy */
+.squishy-neon {
+  background-color: rgb(124 58 237);
+  color: white;
+  border-radius: 0.5rem;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,0.3),
+    0 2px 0 0 rgb(109 40 217),
+    0 4px 0 0 rgb(91 33 182),
+    0 6px 0 0 rgb(76 29 149),
+    0 8px 0 0 rgb(67 26 131),
+    0 8px 16px 0 rgba(147,51,234,0.5);
+  overflow: hidden;
+}
+
+.squishy-neon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+}
+
+.squishy-neon:hover {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,0.3),
+    0 1px 0 0 rgb(109 40 217),
+    0 2px 0 0 rgb(91 33 182),
+    0 3px 0 0 rgb(76 29 149),
+    0 4px 0 0 rgb(67 26 131),
+    0 4px 8px 0 rgba(147,51,234,0.5);
+}
+
+.squishy-neon:hover i {
+  animation: bounce 1s infinite;
+}
+
+/* Candy Squishy */
+.squishy-candy {
+  background: linear-gradient(to bottom right, rgb(244 114 182), rgb(248 113 113));
+  color: white;
+  border-radius: 9999px;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,0.4),
+    0 2px 0 0 #f472b6,
+    0 4px 0 0 #f43f5e,
+    0 6px 0 0 #e11d48,
+    0 8px 0 0 #be123c,
+    0 8px 16px 0 rgba(244,114,182,0.5);
+}
+
+.squishy-candy:hover {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,0.4),
+    0 1px 0 0 #f472b6,
+    0 2px 0 0 #f43f5e,
+    0 3px 0 0 #e11d48,
+    0 4px 0 0 #be123c,
+    0 4px 8px 0 rgba(244,114,182,0.5);
+}
+
+.squishy-candy:hover i {
+  animation: pulse 1s infinite;
+}
+
+/* Cosmic Squishy */
+.squishy-cosmic {
+  background: linear-gradient(to right, rgb(49 46 129), rgb(88 28 135), rgb(88 28 135));
+  color: white;
+  border-radius: 0.5rem;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,0.2),
+    0 2px 0 0 #312e81,
+    0 4px 0 0 #1e1b4b,
+    0 6px 0 0 #0f172a,
+    0 8px 0 0 #020617,
+    0 8px 16px 0 rgba(49,46,129,0.5);
+  overflow: hidden;
+}
+
+.squishy-cosmic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400&fit=crop');
+  background-size: cover;
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+}
+
+.squishy-cosmic:hover {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,0.2),
+    0 1px 0 0 #312e81,
+    0 2px 0 0 #1e1b4b,
+    0 3px 0 0 #0f172a,
+    0 4px 0 0 #020617,
+    0 4px 8px 0 rgba(49,46,129,0.5);
+}
+
+.squishy-cosmic:hover i {
+  animation: spin 1s infinite linear;
+}
+
+/* Tech Squishy */
+.squishy-tech {
+  background-color: rgb(5 150 105);
+  color: white;
+  border-radius: 0.5rem;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,0.3),
+    0 2px 0 0 #059669,
+    0 4px 0 0 #047857,
+    0 6px 0 0 #065f46,
+    0 8px 0 0 #064e3b,
+    0 8px 16px 0 rgba(5,150,105,0.5);
+  overflow: hidden;
+}
+
+.squishy-tech::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 2s infinite;
+}
+
+.squishy-tech:hover {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,0.3),
+    0 1px 0 0 #059669,
+    0 2px 0 0 #047857,
+    0 3px 0 0 #065f46,
+    0 4px 0 0 #064e3b,
+    0 4px 8px 0 rgba(5,150,105,0.5);
+}
+
+.squishy-tech:hover i {
+  animation: bounce 1s infinite;
+}
+
+/* Animations */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-25%);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script>
     let imgpath = "<?php echo htmlspecialchars($imagepath, ENT_QUOTES, 'UTF-8'); ?>.jpg";
     let xmlpath = "<?php echo htmlspecialchars($imagepath, ENT_QUOTES, 'UTF-8'); ?>.xml";
     console.log(imgpath ); // Output: John (if ?name=John)
     console.log(xmlpath );  // Output: 25 (if ?age=25)
 </script>
-
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,11 +259,21 @@ $imagepath = isset($_GET['imagepath']) ? $_GET['imagepath'] : 'imagepath';
     </style>
 </head>
 <body>
-<input type="range" id="scaleSlider" min="0.5" max="3" step="0.1" value="1">
+<input type="range" id="scaleSlider" min="0.5" max="5" step="0.1" value="1.5">
 
- <button onclick="savePascalVOC()">Save XML</button>
+ <button class="squishy squishy-cosmic " onclick="savePascalVOC()">Save XML</button>
+<button class="squishy squishy-candy" id="toggleBoxesBtn" onclick="toggleBoxes()">
+    <i class="fa-solid fa-eye"></i>
+</button>
 
 
+   
+<h4>
+HORSES DIRECTION : 
+"bb" back , "ll" left, "rr" right, "ff" front,"fr" front-right,"fl" front-left,"br" back-right,"bl" back-left, <br> TRUCK DIRECTION : "tbb" truck-back
+"tll", "trr", "tff","tfr","tfl","tbr","tbl",<br>
+GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // STATIONAIRY/PARKED CAR = "ss"
+</h4>
 <table><tr><td>
     <input hidden type="file" id="imageUpload" accept="image/*">
     <div id="canvas-container">
@@ -67,7 +310,7 @@ $imagepath = isset($_GET['imagepath']) ? $_GET['imagepath'] : 'imagepath';
 			let imgHeight = canvas.height; // Get image height from canvas
 
 
-            let labelMap = { "b": 0, "br": 1, "bl": 2 ,"f": 3,"fr": 4,"fl": 5,"r": 6,"l": 7,}; // Assign unique class IDs
+            let labelMap = { "b": 0, "br": 1, "bl": 2 ,"f": 3,"fr": 4,"fl": 5,"r": 6,"l": 7,"tb": 8, "tbr": 9, "tbl": 10 ,"tf": 11,"tfr": 12,"tfl": 13,"tr": 14,"tl": 15}; // Assign unique class IDs
 
             let yoloData = "";
 
@@ -128,7 +371,13 @@ $imagepath = isset($_GET['imagepath']) ? $_GET['imagepath'] : 'imagepath';
 
         const arrowColors = {
             'l': '#FF0000', 'r': '#00FF00', 'f': '#0000FF', 'b': '#FFFF00',
-            'fr': '#FF00FF', 'fl': '#00FFFF', 'bl': '#FFA500', 'br': '#800080'
+            'fr': '#FF00FF', 'fl': '#00FFFF', 'bl': '#FFA500', 'br': '#800080',
+
+              'tl': '#FF0000', 'tr': '#00FF00', 'tf': '#0000FF', 'tb': '#FFFF00',
+            'tfr': '#FF00FF', 'tfl': '#00FFFF', 'tbl': '#FFA500', 'tbr': '#800080',
+
+'g': '#ffffff','s': '#ffffff','o': '#ffffff'
+
         };
 
         document.getElementById("imageUpload").addEventListener("change", function(event) {
@@ -204,10 +453,15 @@ $imagepath = isset($_GET['imagepath']) ? $_GET['imagepath'] : 'imagepath';
     //SPEED INPUT DETECT SHO
     inputField.addEventListener("input", () => {
         let name = inputField.value.toLowerCase().trim();
-        if (["bb", "ll", "rr", "ff","fr","fl","br","bl"].includes(name)) {
+        if (["bb", "ll", "rr", "ff","fr","fl","br","bl","tbb", "tll", "trr", "tff","tfr","tfl","tbr","tbl","gg","oo","ss"].includes(name)) {
 		  console.log(name);
-		if (["ff", "ll", "rr", "bb"].includes(name)) {
+		if (["ff", "ll", "rr", "bb","gg","oo","ss"].includes(name)) {
             name = name[0]; // Convert to single letter
+			console.log("converted",name);
+        }
+
+        if (["tff", "tll", "trr", "tbb"].includes(name)) {
+            name = name[0]+name[1]; // Convert to single letter
 			console.log("converted",name);
         }
             //alert(`Auto-entered: ${name}`);
@@ -229,6 +483,7 @@ $imagepath = isset($_GET['imagepath']) ? $_GET['imagepath'] : 'imagepath';
         let box = { startX, startY, endX, endY, name };
 		console.log("box:",box )
         boxes.push(box);
+toggleBoxes();
         redrawCanvas();
         updateTable();
     }
@@ -253,12 +508,14 @@ $imagepath = isset($_GET['imagepath']) ? $_GET['imagepath'] : 'imagepath';
                 ctx.strokeStyle = box === highlightBox ? "yellow" : color;
                 ctx.lineWidth = box === highlightBox ? 1 : 0.5;
                 ctx.strokeRect(box.startX, box.startY, box.endX - box.startX, box.endY - box.startY);
-                ctx.fillStyle = "white";
-                ctx.fillRect(box.startX, box.startY - 20, ctx.measureText(box.name).width + 10, 20);
+                // ctx.fillStyle = "white";
+                // ctx.fillRect(box.startX, box.startY - 20, ctx.measureText(box.name).width + 10, 20);
                 ctx.fillStyle = "black";
                 ctx.fillText(box.name, box.startX + 5, box.startY - 5);
-                drawArrow(box);
-            });
+		if (!["g", "s", "o"].includes(box.name)) {
+    drawArrow(box);
+		console.log("draw box :",box , color );
+}            });
         }
  function drawArrow(box) {
             let arrowDir = box.name.toLowerCase();
@@ -278,6 +535,14 @@ $imagepath = isset($_GET['imagepath']) ? $_GET['imagepath'] : 'imagepath';
                 case 'fl': arrowEndX -= 15; arrowEndY += 15; break;
                 case 'bl': arrowEndX -= 15; arrowEndY -= 15; break;
                 case 'br': arrowEndX += 15; arrowEndY -= 15; break;
+                case 'tl': arrowEndX -= 20; break;
+                case 'tr': arrowEndX += 20; break;
+                case 'tf': arrowEndY += 20; break;
+                case 'tb': arrowEndY -= 20; break;
+                case 'tfr': arrowEndX += 15; arrowEndY += 15; break;
+                case 'tfl': arrowEndX -= 15; arrowEndY += 15; break;
+                case 'tbl': arrowEndX -= 15; arrowEndY -= 15; break;
+                case 'tbr': arrowEndX += 15; arrowEndY -= 15; break;
             }
 
             ctx.beginPath();
@@ -521,9 +786,27 @@ function savePascalVOC() {
 
 
 
-    </script>
+ let boxesVisible = true;
+
+    function toggleBoxes() {
+        boxesVisible = !boxesVisible;
+        document.getElementById("toggleBoxesBtn").innerHTML = boxesVisible 
+            ? '<i class="fa-solid fa-eye"></i>' 
+            : '<i class="fa-solid fa-eye-slash"></i>';
+        
+        let canvas = document.getElementById("annotationCanvas");
+        let ctx = canvas.getContext("2d");
+
+        if (boxesVisible) {
+            redrawCanvas();
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(document.getElementById("image"), 0, 0);
+        }
+    }    </script>
 </body>
 </html>
 
 
 
+ 
