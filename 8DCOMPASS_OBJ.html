@@ -13,7 +13,6 @@
     </style>
 </head>
 <body>
-
 <table><tr><td>
     <input type="file" id="imageUpload" accept="image/*">
     <div id="canvas-container">
@@ -21,10 +20,7 @@
         <canvas id="annotationCanvas" style="transform: scale(1); transform-origin: top left;"></canvas>
     </div>
     <br>
-	
 	</td><td><button onclick="downloadPascalVOC()">Download XML</button>
-
-
  <button onclick="downloadYOLO()">Download YOLO TXT</button>
 
     <script>
@@ -150,6 +146,8 @@
     document.body.appendChild(inputField);
     inputField.focus();
     
+
+    //SPEED INPUT DETECT SHO
     inputField.addEventListener("input", () => {
         let name = inputField.value.toLowerCase().trim();
         if (["bb", "ll", "rr", "ff","fr","fl","br","bl"].includes(name)) {
@@ -194,7 +192,11 @@
             ctx.drawImage(img, 0, 0);
             ctx.globalAlpha = 1;
             boxes.forEach(box => {
-                ctx.strokeStyle = box === highlightBox ? "yellow" : "red";
+
+             
+
+                let color = arrowColors[box.name]
+                ctx.strokeStyle = box === highlightBox ? "yellow" : color;
                 ctx.lineWidth = box === highlightBox ? 3 : 2;
                 ctx.strokeRect(box.startX, box.startY, box.endX - box.startX, box.endY - box.startY);
                 ctx.fillStyle = "white";
