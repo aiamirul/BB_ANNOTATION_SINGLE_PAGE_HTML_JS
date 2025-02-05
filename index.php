@@ -5,8 +5,9 @@ $imagepath = isset($_GET['imagepath']) ? $_GET['imagepath'] : 'imagepath';
 ?>
 <!DOCTYPE html>
 <script>
-lucide.createIcons();
+// lucide.createIcons();
 </script>
+
 <style>
 
 
@@ -238,6 +239,7 @@ lucide.createIcons();
 }
 
 </style>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <script>
     let imgpath = "<?php echo htmlspecialchars($imagepath, ENT_QUOTES, 'UTF-8'); ?>.jpg";
@@ -259,21 +261,33 @@ lucide.createIcons();
     </style>
 </head>
 <body>
-<input type="range" id="scaleSlider" min="0.5" max="5" step="0.1" value="1.5">
 
- <button class="squishy squishy-cosmic " onclick="savePascalVOC()">Save XML</button>
-<button class="squishy squishy-candy" id="toggleBoxesBtn" onclick="toggleBoxes()">
+
+<table style="border:none;" ><tr><td>
+
+ <button class="squishy squishy-candy" id="toggleBoxesBtn" onclick="toggleBoxes()">
     <i class="fa-solid fa-eye"></i>
 </button>
 
-
-   
-<h4>
+</td>
+<h5><td>
 HORSES DIRECTION : 
 "bb" back , "ll" left, "rr" right, "ff" front,"fr" front-right,"fl" front-left,"br" back-right,"bl" back-left, <br> TRUCK DIRECTION : "tbb" truck-back
 "tll", "trr", "tff","tfr","tfl","tbr","tbl",<br>
 GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // STATIONAIRY/PARKED CAR = "ss"
-</h4>
+</h5></td>
+
+
+</td><td>
+ <button class="squishy squishy-cosmic " onclick="savePascalVOC()"  style="align:right">Save XML</button>
+</td>
+</tr>
+</table>
+<input type="range"  name="range1" id="scaleSlider" min="0.5" max="5" step="0.1" value="1.5">
+
+
+
+
 <table><tr><td>
     <input hidden type="file" id="imageUpload" accept="image/*">
     <div id="canvas-container">
@@ -804,6 +818,217 @@ function savePascalVOC() {
             ctx.drawImage(document.getElementById("image"), 0, 0);
         }
     }    </script>
+
+
+
+<!-- RANGE SLIDER COOOOOL -->
+<style> 
+
+
+label {
+	display: block;
+	font-weight: bold;
+}
+input[type=range], label {
+	-webkit-tap-highlight-color: transparent;
+}
+input[type=range], .range {
+	border-radius: 0.75em;
+	overflow: hidden;
+	margin-bottom: 1.5em;
+}
+input[type=range] {
+	background-color: transparent;
+	box-shadow:
+		0.3em 0.3em 0.4em var(--bs2) inset,
+		-0.3em -0.3em 0.4em var(--bs1) inset;
+	display: block;
+	padding: 0 0.1em;
+	width: 100%;
+	height: 1.5em;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+input[type=range]:focus {
+	outline: transparent;
+}
+input[type=range]::-webkit-slider-thumb {
+	background-color: #255ff4;
+	border: 0;
+	border-radius: 50%;
+	box-shadow:
+		-0.3em -0.3em 0.5em #0937aa inset,
+		0 -0.2em 0.2em 0 #0004,
+		0.3em 0.9em 0.8em #0007;
+	cursor: pointer;
+	position: relative;
+	width: 1.3em;
+	height: 1.3em;
+	transition: all var(--transDur) linear;
+	z-index: 1;
+	-webkit-appearance: none;
+	appearance: none;
+}
+input[type=range]:focus::-webkit-slider-thumb {
+	background-color: #5583f6;
+	box-shadow:
+		-0.3em -0.3em 0.5em #0b46da inset,
+		0 -0.2em 0.2em 0 #0004,
+		0.3em 0.9em 0.8em #0007;
+}
+input[type=range]::-moz-range-thumb {
+	background-color: #255ff4;
+	border: 0;
+	border-radius: 50%;
+	box-shadow:
+		-0.3em -0.3em 0.5em #0937aa inset,
+		0 -0.2em 0.2em 0 #0004,
+		0.3em 0.9em 0.8em #0007;
+	cursor: pointer;
+	position: relative;
+	width: 1.3em;
+	height: 1.3em;
+	transform: translateZ(1px);
+	transition: all var(--transDur) linear;
+	z-index: 1;
+	-moz-appearance: none;
+	appearance: none;
+}
+input[type=range]:focus::-moz-range-thumb {
+	background-color: #5583f6;
+	box-shadow:
+		-0.3em -0.3em 0.5em #0b46da inset,
+		0 -0.2em 0.2em 0 #0004,
+		0.3em 0.9em 0.8em #0007;
+}
+input[type=range]::-moz-focus-outer {
+	border: 0;
+}
+.range {
+	position: relative;
+  width: calc(100% - 1.5em);
+	height: 1.5em;
+}
+.range__ticks {
+	justify-content: space-between;
+	align-items: center;
+	pointer-events: none;
+	position: absolute;
+	top: 0;
+	left: 0.75em;
+	width: calc(100% - 1.5em);
+	height: 100%;
+}
+.range__tick, .range__tick-text {
+	display: inline-block;
+}
+.range__tick {
+	color: var(--tick);
+	font-size: 0.5em;
+	text-align: center;
+	width: 0;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+.range__tick-text {
+	transform: translateX(-50%);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: #2e3138;
+		--fg: #e3e4e8;
+		--bs1: #3c4049;
+		--bs2: #202227;
+		--tick: #c7cad1;
+	}
+} 
+</style>
+
+
+  <script>
+
+
+  window.addEventListener("DOMContentLoaded",() => {
+	let range1 = new NeumorphicRange({
+			element: "#range1",
+			tick: 1
+		}),
+		range2 = new NeumorphicRange({
+			element: "#range2",
+			tick: 4
+		}),
+		range3 = new NeumorphicRange({
+			element:"#range3",
+			tick: 10
+		});
+});
+
+class NeumorphicRange {
+	constructor(args) {
+		this.el = document.querySelector(args.element);
+		this.min = +this.el.min || 0;
+		this.max = +this.el.max || 100;
+		this.step = +this.el.step || 1;
+		this.tick = args.tick || this.step;
+		this.addTicks();
+	}
+	addTicks() {
+		// div to contain everything
+		let wrap = document.createElement("div");
+		wrap.className = "range";
+		this.el.parentElement.insertBefore(wrap,this.el);
+		wrap.appendChild(this.el);
+
+		// div to contain the ticks
+		let ticks = document.createElement("div");
+		ticks.className = "range__ticks";
+		wrap.appendChild(ticks);
+
+		// draw the ticks
+		for (let t = this.min; t <= this.max; t += this.tick) {
+			// zero-width span to allow proper space between each tick
+			let tick = document.createElement("span");
+			tick.className = "range__tick";
+			ticks.appendChild(tick);
+
+			let tickText = document.createElement("span");
+			tickText.className = "range__tick-text";
+			tick.appendChild(tickText);
+			tickText.textContent = t;
+		}
+	}
+}
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
 
