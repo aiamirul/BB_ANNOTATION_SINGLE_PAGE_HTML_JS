@@ -4,9 +4,33 @@ $imagepath = isset($_GET['imagepath']) ? $_GET['imagepath'] : 'imagepath';
 
 ?>
 <!DOCTYPE html>
-<script>
+<!-- <script>
 // lucide.createIcons();
-</script>
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "F5") {
+        event.preventDefault(); // Prevents default reload
+        savePascalVOC();
+    }
+});
+</script> -->
+
+<style>
+        .tmpalertbox {
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color:rgb(118, 255, 103);
+            color: black;
+            padding: 100px;
+            border-radius: 50px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            opacity: 1;
+            font-size:40px;
+            transition: opacity 0.5s ease-out;
+        }
+    </style>
 
 <style>
 
@@ -255,44 +279,111 @@ $imagepath = isset($_GET['imagepath']) ? $_GET['imagepath'] : 'imagepath';
     <style>
         #canvas-container { position: relative; display: inline-block; }
         #annotationCanvas { position: absolute; top: 0; left: 0; }
-        table { margin-top: 10px; border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid black; padding: 1px; text-align: left; }
-        th { background-color: #f2f2f2; }
+       
     </style>
 </head>
 <body>
 
 
-<table style="border:none;" ><tr><td>
+<table  border=0  >
+  <tr border=0 ><td>
 
  <button class="squishy squishy-candy" id="toggleBoxesBtn" onclick="toggleBoxes()">
-    <i class="fa-solid fa-eye"></i>
+    Q <i class="fa-solid fa-eye"></i>
 </button>
 
-</td>
-<h5><td>
-HORSES DIRECTION : 
-"bb" back , "ll" left, "rr" right, "ff" front,"fr" front-right,"fl" front-left,"br" back-right,"bl" back-left, <br> TRUCK DIRECTION : "tbb" truck-back
-"tll", "trr", "tff","tfr","tfl","tbr","tbl",<br>
-GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // STATIONAIRY/PARKED CAR = "ss"
-</h5></td>
-
-
+</td><td>
+      <h5>
+    HORSES DIRECTION : 
+    "bb" back , "ll" left, "rr" right, "ff" front,"fr" front-right,"fl" front-left,"br" back-right,"bl" back-left, <br> TRUCK DIRECTION : "tbb" truck-back
+    "tll", "trr", "tff","tfr","tfl","tbr","tbl",<br>
+    GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // STATIONAIRY/PARKED CAR = "ss"
+    </h5>
 </td><td>
  <button class="squishy squishy-cosmic " onclick="savePascalVOC()"  style="align:right">Save XML</button>
+ </td><td>
+  <a href="/labelimg/nexttask.php" > 
+ <button class="squishy squishy-candy "  style="align:right">Next</button>
+</a>
 </td>
+
+
 </tr>
 </table>
-<input type="range"  name="range1" id="scaleSlider" min="0.5" max="5" step="0.1" value="1.5">
+
+
+
+ <table width=120%>
+<tr>
+
+
+<td>
+<label>Zoom:</label>
+<input type="range"  name="range1" id="scaleSlider" min="0.5" max="6" step="0.1" value="2">
+</td>
+<td>
+        <label>Brightness:</label>
+        <input type="range" id="brightness" min="0" max="200" value="100">
+        </td>
+<td>
+        <label>Contrast:</label>
+        <input type="range" id="contrast" min="0" max="200" value="100">        </td>
+        <td>
+<button id="resetimageadjust">Reset</button>
+
+        </td>
+
+</tr>
+   <table>
 
 
 
 
-<table><tr><td>
+
+   
+    <script>
+
+
+         brightnessSlider = document.getElementById("brightness");
+         contrastSlider = document.getElementById("contrast");
+         resetButton = document.getElementById("resetimageadjust");
+
+        function updateImage() {
+          image = document.getElementById("image");
+          canvas = document.getElementById("annotationCanvas");
+             brightness = brightnessSlider.value;
+             contrast = contrastSlider.value;
+            image.style.filter = `brightness(${brightness}%) contrast(${contrast}%)`;
+            canvas.style.filter = `brightness(${brightness}%) contrast(${contrast}%)`;
+
+            console.log("Bright",brightness)
+
+            console.log("contrast",brightness)
+        }
+
+        function resetSliders() {
+            brightnessSlider.value = 100;
+            contrastSlider.value = 100;
+            updateImage();
+        }
+
+
+        brightnessSlider.addEventListener("input", updateImage);
+        contrastSlider.addEventListener("input", updateImage);
+        resetButton.addEventListener("click", resetSliders);
+    </script>
+
+
+
+
+
+<table  width=120% ><tr>
+
+<td>
     <input hidden type="file" id="imageUpload" accept="image/*">
     <div id="canvas-container">
-        <img id="image" crossorigin="anonymous" style="transform: scale(1); transform-origin: top left;">
-        <canvas id="annotationCanvas" style="transform: scale(1); transform-origin: top left;"></canvas>
+        <img id="image" crossorigin="anonymous" style="transform: scale(2.3); transform-origin: top left;">
+        <canvas id="annotationCanvas" style="transform: scale(2.3); transform-origin: top left;"></canvas>
     </div>
     <br>
 	<!-- </td><td><button onclick="downloadPascalVOC()">Download XML</button>
@@ -306,10 +397,39 @@ GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // S
         slider = document.getElementById("scaleSlider");
 
         function updateScale() {
-            const scale = slider.value;
+             scale = slider.value;
             image.style.transform = `scale(${scale})`;
             canvas.style.transform = `scale(${scale})`;
         }
+
+        
+        function applyScale() {
+        image.style.transform = `scale(${scale})`;
+        canvas.style.transform = `scale(${scale})`;
+    }
+        function updateScale() {
+        scale = parseFloat(slider.value);
+        applyScale();
+        }
+
+        function updateScaleup() {
+          scale =parseFloat(document.getElementById("scaleSlider").value);
+          console.log("UP",scale);
+            scale = Math.min(6, scale + 0.1); // Prevent scaling above 2
+            console.log("UP",scale);
+            document.getElementById("scaleSlider").value= scale;
+            applyScale();
+        }
+
+        function updateScaledown() {
+          scale =parseFloat(document.getElementById("scaleSlider").value);
+            scale = Math.max(0.5, scale - 0.1); // Prevent scaling below 0.5
+            document.getElementById("scaleSlider").value= scale;
+            applyScale();
+        }
+
+
+
 
         slider.addEventListener("input", updateScale);
     </script>
@@ -358,7 +478,17 @@ GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // S
     </script>
 	
 	
-    <table id="boundingBoxTable">
+   
+
+	</td>
+
+
+
+
+
+
+  <td align=left>
+<table id="boundingBoxTable" border=1>
         <thead>
             <tr>
                 <th>Label</th>
@@ -371,8 +501,9 @@ GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // S
         </thead>
         <tbody></tbody>
     </table>
+     
 
-	</td>
+      </td>
 	</tr>
     <br>
        <script>
@@ -406,8 +537,6 @@ GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // S
             };
             reader.readAsDataURL(file);
         });
-        
-
         function loadImage(src) {
             let img = document.getElementById("image");
             img.crossOrigin = "anonymous";
@@ -421,12 +550,6 @@ GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // S
                 ctx.drawImage(img, 0, 0);
             };
         }
-
-
-
-
-
-
         canvas.addEventListener("mousedown", (e) => {
             drawing = true;
             startX = e.offsetX;
@@ -442,6 +565,7 @@ GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // S
             ctx.lineWidth = 1;
             ctx.strokeRect(startX, startY, currentX - startX, currentY - startY);
         });canvas.addEventListener("mouseup", (e) => {
+          
     if (!drawing) return;
     drawing = false;
     let endX = e.offsetX;
@@ -481,7 +605,9 @@ GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // S
             //alert(`Auto-entered: ${name}`);
 			console.log("inputfieldChecker:",normStartX, normStartY, normEndX, normEndY )
             addBox(name,normStartX, normStartY, normEndX, normEndY);
+            
 			inputField.remove();
+      
         }
 		
     });
@@ -500,6 +626,7 @@ GENERAL OBJ: TRUCKGATE = "gg" //  OTHER-CARS-following inner-tracklane "oo" // S
 toggleBoxes();
         redrawCanvas();
         updateTable();
+        
     }
 	
 	
@@ -788,9 +915,21 @@ function savePascalVOC() {
         headers: { "Content-Type": "application/xml" },
         body: xmlContent
     })
-    .then(response => response.json())
+    .then(response =>
+     response.json())
     .then(data => {
-        alert(data.message);
+        // alert(data.message);
+        console.log("SAVE XML Successfully: ",data.message)
+        let alertBox = document.createElement("div");
+        alertBox.className = "tmpalertbox";
+        alertBox.innerText = "XML Labels Saved";
+        document.body.appendChild(alertBox);
+
+        setTimeout(() => {
+            alertBox.style.opacity = "0";
+            setTimeout(() => alertBox.remove(), 250);
+        }, 250);
+        
     })
     .catch(error => {
         console.error("Error saving XML:", error);
@@ -1016,6 +1155,62 @@ class NeumorphicRange {
 
 
 
+
+
+
+
+<script>
+
+function toggleTableVisibility(tableId) {
+    xxtable = document.getElementById(tableId);
+    if (xxtable) {
+        xxtable.style.display = (xxtable.style.display === "none") ? "table" : "none";
+    }
+}
+
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "q") {
+             
+                toggleBoxes();
+             
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "q") {
+               
+                toggleTableVisibility("boundingBoxTable");
+            }
+        });
+     
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+              resetSliders();
+            }
+        });
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "s") {
+              savePascalVOC();
+            }
+        });
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "w") {
+              updateScaledown();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "e") {
+              updateScaleup();
+            }
+        });
+
+
+
+
+</script>
 
 
 
